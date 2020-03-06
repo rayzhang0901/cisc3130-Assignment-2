@@ -1,0 +1,59 @@
+import java.io.*;
+import java.util.*;
+/*EMP ID:23403512
+ *Name:JingYiZhang (Ray)
+ */
+public class MusicPlayer {
+	
+    public static LinkedList makeList(Scanner sc, LinkedList lk) {
+        while (sc.hasNext()) {
+            String[] songList = sc.nextLine().split(",");
+            lk.insertSong(songList[2], songList[1]);
+        }
+        return lk;
+    }
+    public static void startList(LinkedList playlist, songHistory history, Scanner kb) {//method to keep playing if the user wishes to continue//
+        playlist.currentSong();
+        history.addSong(playlist.getSong()); 
+        playlist.nextSong();
+        System.out.println("");
+        System.out.print("Do You Want to Continue Listen to More Song? ");
+        while (!kb.nextLine().equals("N")) {//loop to keep playing until the user press N to stop//
+            history.addSong(playlist.getSong());
+            playlist.currentSong();
+            playlist.nextSong();
+            System.out.println("");
+            System.out.print("Do You Want to Continue Listen to More Song?");
+        }
+        System.out.println("\n");
+        history.displaySongHistory(); 
+    }
+    public static void skipL(Scanner sc) {
+        sc.nextLine();
+        sc.nextLine();
+    }
+    public static void main(String[] args)throws Exception {
+        
+    	Scanner sc = new Scanner(System.in);
+
+        songHistory history = new songHistory();
+        songHistory history2 = new songHistory();
+        Scanner cd = new Scanner(new File("topListGlobal.csv"));
+        Scanner cd2 = new Scanner(new File("topListUS.csv"));
+        skipL(cd);
+        skipL(cd2);
+        LinkedList playlist1 = new LinkedList();
+        LinkedList playlist2 = new LinkedList();
+        System.out.println("Thank You For Using This Music Player!!");
+        System.out.println("In This Music Player,");
+        System.out.println("Please Enter Y for Yes and N for No");
+        System.out.println("");
+        playlist1 = makeList(cd, playlist1);
+        playlist2 = makeList(cd2, playlist2);
+        startList(playlist1, history, sc);
+        startList(playlist2, history2, sc);
+        cd.close();
+        cd2.close();
+    }
+    
+}
