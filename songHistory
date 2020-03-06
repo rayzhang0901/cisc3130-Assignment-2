@@ -1,0 +1,30 @@
+public class songHistory {
+    private Song first;
+
+    public void addSong(String s) {
+        Song newTrack = new Song(s);
+        newTrack.next = first;
+        first = newTrack;
+    }
+
+    public void displaySongHistory () {
+        Song current = first;
+        System.out.println("Played  History: ");
+        while (current != null) {
+            current.displaySong();
+            current = current.next;
+        }
+        System.out.println();
+    }
+    public class Song {
+    	String song;
+    	Song next;
+
+        public Song(String s) {
+            this.song = s;
+        }
+        public void displaySong() {
+            System.out.println(song);
+        }
+    }
+}
